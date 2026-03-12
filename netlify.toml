@@ -1,5 +1,0 @@
-[[redirects]]
-  from = "/sales-api/*"
-  to = "https://spes.pscgh.com:442/sales-api/:splat"
-  status = 200
-  force = true

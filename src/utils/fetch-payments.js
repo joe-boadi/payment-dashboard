@@ -1,14 +1,5 @@
-const _BASE_URL = 'https://spes.pscgh.com:442/sales-api/api';
-
-const getApiBase = () => {
-  // Production (Netlify) → uses free CORS proxy
-  if (import.meta.env.PROD) {
-    return `https://corsproxy.io/?url=${encodeURIComponent(_BASE_URL)}`;
-  }
-  // Local development → uses your existing Vite proxy
-  return '/sales-api/api';
-};
-
+const API_BASE = 'https://spes.pscgh.com:442/sales-api/api';
+const PROXY = 'https://api.allorigins.win/raw?url=';
 /**
  * Fetch all payments for a date range
  * @param {string} startDate - YYYY-MM-DD
@@ -16,11 +7,16 @@ const getApiBase = () => {
  * @returns {Promise<Object[]>}
  */
 export const fetchPayments = async (startDate, endDate) => {
-  const url = `${getApiBase()}/Payments?StartDate=${encodeURIComponent(startDate)}&EndDate=${encodeURIComponent(endDate)}`
-  const res = await fetch(url)
-  if (!res.ok) throw new Error(`Failed to fetch payments: ${res.status}`)
-  return res.json()
-}
+  const targetUrl = `${API_BASE}/Payments?StartDate=${encodeURIComponent(startDate)}&EndDate=${encodeURIComponent(endDate)}`;
+  const url = `${PROXY}${encodeURIComponent(targetUrl)}`;
+
+  const res = await fetch(url);
+  if (!res.ok) {
+    const text = await res.text().catch(() => 'Unknown error');
+    throw new Error(`API Error ${res.status}: ${text}`);
+  }
+  return res.json();
+};
 
 /**
  * Fetch single payment details
@@ -28,7 +24,7 @@ export const fetchPayments = async (startDate, endDate) => {
  * @returns {Promise<Object>}
  */
 export const fetchPaymentDetail = async (paymentId) => {
-  const url = `${getApiBase()}/Payments/${encodeURIComponent(paymentId)}`
+  const url = `${API_BASE}/Payments/${encodeURIComponent(paymentId)}`
   const res = await fetch(url)
   if (!res.ok) throw new Error(`Failed to fetch detail: ${res.status}`)
   return res.json()
