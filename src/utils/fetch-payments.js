@@ -1,5 +1,6 @@
 const API_BASE = 'https://spes.pscgh.com:442/sales-api/api';
 const PROXY = 'https://api.allorigins.win/raw?url=';
+
 /**
  * Fetch all payments for a date range
  * @param {string} startDate - YYYY-MM-DD
@@ -11,6 +12,7 @@ export const fetchPayments = async (startDate, endDate) => {
   const url = `${PROXY}${encodeURIComponent(targetUrl)}`;
 
   const res = await fetch(url);
+
   if (!res.ok) {
     const text = await res.text().catch(() => 'Unknown error');
     throw new Error(`API Error ${res.status}: ${text}`);
@@ -24,8 +26,11 @@ export const fetchPayments = async (startDate, endDate) => {
  * @returns {Promise<Object>}
  */
 export const fetchPaymentDetail = async (paymentId) => {
-  const url = `${API_BASE}/Payments/${encodeURIComponent(paymentId)}`
+  const targetUrl = `${API_BASE}/Payments/${encodeURIComponent(paymentId)}`
+  const url = `${PROXY}${encodeURIComponent(targetUrl)}`
+
   const res = await fetch(url)
   if (!res.ok) throw new Error(`Failed to fetch detail: ${res.status}`)
+
   return res.json()
 }
