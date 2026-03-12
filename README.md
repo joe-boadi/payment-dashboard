@@ -14,8 +14,6 @@ vendor to view payments received from Customer.
 
 ![A modal to view Payment details](public/assets/images/modal.png)
 
-To ensure other developers can seamlessly clone, inspect, and contribute to this project, follow this structured guide. This setup adheres to the **Clean Code** and **Documentation** requirements specified in your assignment.
-
 ---
 
 ## Step-by-Step Local Setup
@@ -102,11 +100,6 @@ The application is designed to handle missing data gracefully:
 * **Mobile View**: The table automatically adjust to the layout for screens smaller than **768px** to ensure a professional user experience.
 
 ---
-
-### How this helps other developers
-
-By isolating the API logic into a `util` file and using environment variables, other developers can easily swap the endpoint or add new query parameters like `StartDate` and `EndDate` without refactoring the UI components.
-
 
 ## Technologies
 - React.js + Vite
