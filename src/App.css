@@ -231,12 +231,12 @@ body.modal-open {
 }
 
 .error-image-container {
-  min-width: 80%;
+  min-width: 200px;
   margin: auto;
 }
 .error-image {
-  width: 100%;
-  border-radius: 2rem;
+  width: 28%;
+  border-radius: .5rem;
 }
 
 .error_sub_info {
