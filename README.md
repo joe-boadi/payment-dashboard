@@ -3,7 +3,7 @@
 A web application showing a grid/table for a shop
 vendor to view payments received from Customer.
 
-![An overview of the payment data web view](/assets/images/payment.png)
+![An overview of the payment data web view](public/assets/images/payment.png)
 
 ## Features
 - Real-time table from an `API`
@@ -12,7 +12,7 @@ vendor to view payments received from Customer.
 - Fully responsive + accessible
 - CORS handled via Vite proxy
 
-![A modal to view Payment details](/assets/images/modal.png)
+![A modal to view Payment details](public/assets/images/modal.png)
 
 To ensure other developers can seamlessly clone, inspect, and contribute to this project, follow this structured guide. This setup adheres to the **Clean Code** and **Documentation** requirements specified in your assignment.
 
