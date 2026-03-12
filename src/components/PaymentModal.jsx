@@ -5,9 +5,26 @@ import { formatCurrency, formatDate } from '../utils'
 export const PaymentModal = ({ payment, isOpen, onClose }) => {
   if (!payment || !isOpen) return null
 
+ const handleKeyDown = (e) => {
+  if (e.key === 'Enter' || e.key === ' '){
+    onClose()
+  }
+ } 
   return (
-    <dialog open={isOpen} className="modal" onClick={onClose} aria-modal aria-labelledby='modal-title'>
-      <section className="modal-content" role='note' onClick={e => e.stopPropagation()}>
+    <dialog 
+      open={isOpen} 
+      className="modal" 
+      onClick={onClose}
+      aria-modal aria-labelledby='modal-title' 
+      onKeyDown={(e) => handleKeyDown(e)}
+    >
+      <section 
+        className="modal-content" 
+        role='note' 
+        aria-labelledby='modal-content' 
+        onClick={e => e.stopPropagation()}
+        onKeyDown={(e) => handleKeyDown(e)}
+      >
         
         <button className="close-btn" onClick={onClose}><X size={24} /></button>
         
@@ -22,8 +39,8 @@ export const PaymentModal = ({ payment, isOpen, onClose }) => {
           <div><strong>Amount Paid:</strong> {formatCurrency(payment.AmountPaid)}</div>
           <div><strong>Outstanding:</strong> {formatCurrency(payment.Outstanding)}</div>
           <div><strong>Date:</strong> {formatDate(payment.PaymentDate)}</div>
-          <div><strong>Status:</strong> {payment.Status}</div>
-          <div><strong>Remarks:</strong> {payment.Remarks || '—'}</div>
+          <div><strong>Status:</strong> {payment.Status ?? ' N/A'}</div>
+          <div><strong>Remarks:</strong> {payment.Remarks ?? ' —'}</div>
         </div>
 
         {/* Mode of Payments */}
@@ -34,11 +51,11 @@ export const PaymentModal = ({ payment, isOpen, onClose }) => {
               <thead><tr><th>Mode</th><th>Amount</th><th>Bank</th><th>Reference</th></tr></thead>
               <tbody>
                 {payment.ModeOfPayments.map((m, i) => (
-                  <tr key={i}>
-                    <td>{m.ModeOfPayment}</td>
-                    <td>{formatCurrency(m.Amount)}</td>
-                    <td>{m.Bank}</td>
-                    <td>{m.Reference}</td>
+                  <tr key={m[i]}>
+                    <td>{m.ModeOfPayment || '--'}</td>
+                    <td>{formatCurrency(m.Amount) || '--'}</td>
+                    <td>{m.Bank || '--'}</td>
+                    <td>{m.Reference || '--'}</td>
                   </tr>
                 ))}
               </tbody>
@@ -54,11 +71,11 @@ export const PaymentModal = ({ payment, isOpen, onClose }) => {
               <thead><tr><th>Invoice #</th><th>Total</th><th>Outstanding</th><th>Date</th></tr></thead>
               <tbody>
                 {payment.invoices.map((inv, i) => (
-                  <tr key={i}>
-                    <td>{inv.InvoiceNumber}</td>
-                    <td>{formatCurrency(inv.TotalAmount)}</td>
-                    <td>{formatCurrency(inv.Outstanding)}</td>
-                    <td>{formatDate(inv.InvoiceDate)}</td>
+                  <tr key={inv[i]}>
+                    <td>{inv.InvoiceNumber || '--'}</td>
+                    <td>{formatCurrency(inv.TotalAmount) || '--'}</td>
+                    <td>{formatCurrency(inv.Outstanding) || '--'}</td>
+                    <td>{formatDate(inv.InvoiceDate) || '--'}</td>
                   </tr>
                 ))}
               </tbody>
@@ -70,10 +87,10 @@ export const PaymentModal = ({ payment, isOpen, onClose }) => {
         {payment.Payee && (
           <div className="section">
             <h3>Payee Information</h3>
-            <p><strong>Name:</strong> {payment.Payee.FullName}</p>
-            <p><strong>Phone:</strong> {payment.Payee.Phone}</p>
-            <p><strong>Email:</strong> {payment.Payee.Email}</p>
-            <p><strong>Address:</strong> {payment.Payee.Address}</p>
+            <p><strong>Name:</strong> {payment.Payee.FullName || ' N/A'}</p>
+            <p><strong>Phone:</strong> {payment.Payee.Phone || ' N/A'}</p>
+            <p><strong>Email:</strong> {payment.Payee.Email || ' N/A'}</p>
+            <p><strong>Address:</strong> {payment.Payee.Address || ' N/A'}</p>
           </div>
         )}
       </section>

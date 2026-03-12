@@ -10,14 +10,13 @@ export const Filters = ({ startDate, endDate, searchTerm, onStartChange, onEndCh
       </div>
       <div className="search">
         <Search size={18} />
-        <input
-          type="text"
-          name='search'
-          placeholder="Search customer or payment number..."
-          value={searchTerm}
-          className='query-data'
-          onChange={onSearchChange}
-        />
+          <input
+            type="text"
+            name='search'
+            placeholder="Search customer or payment number..."
+            value={searchTerm}
+            onChange={onSearchChange}
+            />
       </div>
     </div>
   )
