@@ -141,9 +141,6 @@ function App() {
           name="description"
           content="View and manage all customer payments in real-time. Filter by date, search customers, and see full transaction details."
         />
-
-        {/* Dynamic title based on current page state (optional enhancement) */}
-        {searchTerm && <title>Search Results: {searchTerm} | PayTrack</title>}
       </Helmet>
       <div className="container">
         <Filters
