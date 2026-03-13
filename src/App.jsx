@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Wallpaper } from 'lucide-react';
 import { fetchPayments, fetchPaymentDetail, debounce } from './utils';
@@ -60,7 +61,7 @@ function App() {
     loadPayments();
   }, [loadPayments]);
 
-  const debouncedSearch = useMemo(() => debounce((term) => setSearchTerm(term), 300), []);
+  const debouncedSearch = useMemo(() => debounce((term) => setSearchTerm(term), 500), []);
 
   // Filtered + Sorted data (useMemo → no re-renders on every keystroke)
   const processedPayments = useMemo(() => {
@@ -134,6 +135,16 @@ function App() {
         <p>Shop Vendor Portal</p>
       </header>
 
+      <Helmet>
+        <title>PayTrack | PSC-GH</title>
+        <meta
+          name="description"
+          content="View and manage all customer payments in real-time. Filter by date, search customers, and see full transaction details."
+        />
+
+        {/* Dynamic title based on current page state (optional enhancement) */}
+        {searchTerm && <title>Search Results: {searchTerm} | PayTrack</title>}
+      </Helmet>
       <div className="container">
         <Filters
           startDate={startDate}

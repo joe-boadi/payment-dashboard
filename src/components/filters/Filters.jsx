@@ -35,7 +35,7 @@ export const Filters = ({
           name="search"
           placeholder="Search customer or payment number..."
           value={searchTerm}
-          onChange={onSearchChange}
+          onChange={(e) => onSearchChange(e)}
         />
       </div>
     </div>
