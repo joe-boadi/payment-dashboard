@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
+import { Wallpaper } from 'lucide-react'
 import { fetchPayments, fetchPaymentDetail, debounce } from './utils'
 import {Filters, PaymentTable, PaymentModal, Pagination, ErrorPage, Loader} from './components'
 import './App.css'
@@ -6,17 +7,25 @@ import './App.css'
 function App() {
 
   const [payments, setPayments] = useState([])
+  
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+
   const [selectedPayment, setSelectedPayment] = useState(null)
+  const [loadingDetail, setLoadingDetail] = useState(false)
+  
   const [modalOpen, setModalOpen] = useState(false)
+  
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
+  
   const [searchTerm, setSearchTerm] = useState('')
   const [sortConfig, setSortConfig] = useState({ key: 'PaymentDate', direction: 'desc' })
-  const [currentPage, setCurrentPage] = useState(1)
   
-  const ITEMS_PER_PAGE = 10
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalCount, setTotalCount] = useState(0)
+  
+  const PAGE_SIZE = 10
 
     // Reset to first page when filters, search or sort changes
   useEffect(() => {
@@ -37,8 +46,9 @@ function App() {
     setLoading(true)
     setError(null)
     try {
-      const data = await fetchPayments(startDate, endDate)
-      setPayments(data)
+      const { payments, pagination } = await fetchPayments(startDate, endDate)
+      setPayments(payments);
+      setTotalCount(pagination.totalCount || payments.length)
     } catch (err) {
       setError(err.message)
       console.error(err)
@@ -51,8 +61,6 @@ function App() {
     loadPayments()
   }, [loadPayments])
 
-
-  // Debounced search
   const debouncedSearch = useMemo(() => debounce((term) => setSearchTerm(term), 300), [])
 
   // Filtered + Sorted data (useMemo → no re-renders on every keystroke)
@@ -85,20 +93,26 @@ function App() {
     return result
   }, [payments, searchTerm, sortConfig])
 
-    // Pagination calculations
-  const totalPages = Math.ceil(processedPayments.length / ITEMS_PER_PAGE)
-  const currentPayments = processedPayments.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  )
+  // Paginated slice for current page
+  const paginatedPayments = useMemo(() => {
+    const start = (currentPage - 1) * PAGE_SIZE
+    return processedPayments.slice(start, start + PAGE_SIZE)
+  }, [processedPayments, currentPage])
+
+  const displayTotalPages = Math.ceil(processedPayments.length / PAGE_SIZE)
 
   const handleView = async (paymentId) => {
+    setModalOpen(true)
+    setLoadingDetail(true)
     try {
       const detail = await fetchPaymentDetail(paymentId)
       setSelectedPayment(detail)
       setModalOpen(true)
     } catch (err) {
       alert('Failed to load payment details: ' + err.message)
+      setModalOpen(false)
+    } finally {
+      setLoadingDetail(false)
     }
   }
 
@@ -108,22 +122,6 @@ function App() {
       direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc'
     }))
   }
-
-    // Lock scroll + apply strong backdrop class when modal opens
-  useEffect(() => {
-    if (modalOpen) {
-      document.body.classList.add('modal-open')
-      document.body.style.overflow = 'hidden'   // prevents scrolling behind modal
-    } else {
-      document.body.classList.remove('modal-open')
-      document.body.style.overflow = 'visible'
-    }
-
-    return () => {
-      document.body.classList.remove('modal-open')
-      document.body.style.overflow = 'visible'
-    }
-  }, [modalOpen])
 
   const closeModal = () => {
     setModalOpen(false)
@@ -153,31 +151,45 @@ function App() {
         {!loading && !error && (
           <>
             {processedPayments.length === 0 ? (
-              <div className="empty">No payments found for the selected period.</div>
+              <div className="empty">
+                <Wallpaper size={120}/>
+                <p>No payments found for the selected period.</p>
+              </div>
             ) : (
               <PaymentTable
-                payments={currentPayments}
+                payments={paginatedPayments}
                 onView={handleView}
                 sortConfig={sortConfig}
                 onSort={handleSort}
               />
             )}
+
+            {totalCount > 0 && (
+              <div className="total-count">
+                Showing {(currentPage - 1) * 
+                  PAGE_SIZE + 1}–{Math.min(currentPage * PAGE_SIZE, processedPayments.length)} of {processedPayments.length.toLocaleString()} payments
+              </div>
+            )}
+
             {/* Pagination Controls */}
-              {processedPayments.length > 0 && (
+              {displayTotalPages > 1 && (
                 <Pagination
                   currentPage={currentPage}
-                  totalPages={totalPages}
+                  totalPages={displayTotalPages}
                   onPageChange={setCurrentPage}
                 />
               )}
           </>
         )}
       </div>
-      <PaymentModal
-        payment={selectedPayment}
-        isOpen={modalOpen}
-        onClose={closeModal}
-      />
+      
+        <PaymentModal
+          payment={selectedPayment}
+          isOpen={modalOpen}
+          loadingDetail={loadingDetail}
+          onClose={closeModal}
+        />
+        
     </>
   )
 }
