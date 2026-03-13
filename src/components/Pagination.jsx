@@ -23,6 +23,7 @@ export const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     return (
         <div className="pagination">
         <button
+            title='Previous Page'
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage === 1}
             className="page-btn"
@@ -33,6 +34,7 @@ export const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
         {pages.map((page) => (
             <button
+            title={`Page ${page}`}
             key={page}
             onClick={() => onPageChange(page)}
             className={`page-btn ${page === currentPage ? 'active' : ''}`}
@@ -44,6 +46,7 @@ export const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         ))}
 
         <button
+            title='Next Page'
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
             className="page-btn"

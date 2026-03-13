@@ -26,12 +26,12 @@ export const PaymentTable = ({ payments, onView, sortConfig, onSort }) => {
         <tbody>
           {payments.map((p) => (
             <tr key={p.PaymentId}>
-              <td>{p.PaymentNumber}</td>
-              <td>{p.Customer}</td>
-              <td className="amount">{formatCurrency(p.Amount)}</td>
-              <td>{formatDate(p.PaymentDate)}</td>
+              <td title='Payment Number'>{p.PaymentNumber}</td>
+              <td title='Customer'>{p.Customer}</td>
+              <td title='Payment Amount' className="amount">{formatCurrency(p.Amount)}</td>
+              <td title='Payment Date'>{formatDate(p.PaymentDate)}</td>
               <td>
-                <button className="view-btn" onClick={() => onView(p.PaymentId)}>
+                <button title='View Details' className="view-btn" onClick={() => onView(p.PaymentId)}>
                   <Eye size={18} /> View
                 </button>
               </td>

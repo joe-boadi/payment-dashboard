@@ -5,12 +5,13 @@ export const Filters = ({ startDate, endDate, searchTerm, onStartChange, onEndCh
   return (
     <div className="filters">
       <div className="date-range">
-        <label>From <input name='date' type="date" value={startDate} onChange={onStartChange} /></label>
-        <label>To <input name='date' type="date" value={endDate} onChange={onEndChange} /></label>
+        <label>From <input title='Date From' name='date' type="date" value={startDate} onChange={onStartChange} /></label>
+        <label>To <input title='Date To' name='date' type="date" value={endDate} onChange={onEndChange} /></label>
       </div>
       <div className="search">
         <Search size={18} />
           <input
+            title='Search Payments'
             type="text"
             name='search'
             placeholder="Search customer or payment number..."
