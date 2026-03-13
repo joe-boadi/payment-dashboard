@@ -6,6 +6,7 @@ vendor to view payments received from Customer.
 ![An overview of the payment data web view](public/assets/images/payment.png)
 
 ## Features
+
 - Real-time table from an `API`
 - Date range filter + search
 - Modal with full details (ModeOfPayments, invoices, Payee)
@@ -71,38 +72,49 @@ Once the server starts, open your browser to **http://localhost:5173**.
 
 ### Folder Structure
 
-* **`/src/utils/`**: Contains `fetch-payments.js`. This is where the core logic for hitting the GET requests to `API` resides as well related utils for robust data handling.
+- **`/src/utils/`**: Contains `fetch-payments.js`. This is where the core logic for hitting the GET requests to `API` resides as well related utils for robust data handling.
 
+- **`/src/components/`**: Houses the `PaymentTable`, `PaymentModal`, and `Filters`. Each component is designed for **Responsiveness** and **Accessibility**.
 
-* **`/src/components/`**: Houses the `PaymentTable`, `PaymentModal`, and `Filters`. Each component is designed for **Responsiveness** and **Accessibility**.
-
-
-* **`/src/App.css`**: Centralized CSS with variables for consistent branding.
+- **`/src/App.css`**: Centralized CSS with variables for consistent branding.
 
 ### Technical Trade-offs & Decisions
 
-* **Vite Proxy over CORS**:   a proxy in `vite.config.js` is implemented to allow local development without browser security errors.
+## CORS Management
 
-* **Vanilla CSS**: To keep the bundle size small and highly performant, we used modern vanilla CSS (Flexbox/Grid) instead of heavy UI libraries.
+- **Local development**: Uses .env for storing the API url or fallback directly in the `/utils` directory for seamless API access.
+- **Production (Netlify)**: Uses `netlify.toml` redirects to proxy all API requests through Netlify’s edge network, completely eliminating CORS issues.
+
+- **Vanilla CSS**: To keep the bundle size small and highly performant, modern vanilla CSS (Flexbox/Grid) was used instead of heavy UI libraries.
+
+## Code Formatting
+
+This project uses **Prettier** to ensure consistent indentation, quotes, semicolons, and style across all files.
+
+Before every commit or push, run:
+
+```bash
+npm run format
+```
 
 ### Edge Case Handling & Fallbacks
 
 The application is designed to handle missing data gracefully:
 
-* **Missing Fields**: If a `Customer` or `Payment Number` is missing, an em-dash (`—`) or `N/A` is displayed.
+- **Missing Fields**: If a `Customer` or `Payment Number` is missing, an em-dash (`—`) or `N/A` is displayed.
 
+- **Loading State**: While the payment-data is being fetched (triggered as user launches the app), a `Loader component` indicator provides immediate feedback, same applies to requesting payment details.
 
-* **Loading State**: While the payment-data is being fetched (triggered as user launches the app), a "Loader component" indicator provides immediate feedback.
+- **Error Fallback Page**: When there is any request error, application falls into an error-page UI component which also provides immediate feedback.
 
-* **Error Fallback Page**: When there is any request error, application falls into an error-page UI component which also provides immediate feedback.
-
-
-* **Mobile View**: The table automatically adjust to the layout for screens smaller than **768px** to ensure a professional user experience.
+- **Mobile View**: The table automatically adjust to the layout for screens smaller than **768px** to ensure a professional user experience.
 
 ---
 
 ## Technologies
+
 - React.js + Vite
 - Vanilla CSS
+- Prettier
 - Lucide React Icons
 - PropTypes
