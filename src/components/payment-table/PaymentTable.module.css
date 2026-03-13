@@ -1,0 +1,65 @@
+.tableContainer {
+  overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+th,
+td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  background: var(--primary);
+  color: white;
+  cursor: pointer;
+  user-select: none;
+  transition: all ease-in-out;
+}
+
+th:hover {
+  background: #1e3a8a;
+}
+
+tr:hover {
+  background: #f1f5f9;
+}
+
+.amount {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.viewBtn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease-in-out;
+}
+
+.viewBtn:hover {
+  background: #059669;
+}
+
+@media (max-width: 768px) {
+  th,
+  td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.95rem;
+  }
+}

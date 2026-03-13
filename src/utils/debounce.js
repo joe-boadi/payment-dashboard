@@ -5,9 +5,9 @@
  * @returns {Function}
  */
 export const debounce = (fn, delay) => {
-  let timer
+  let timer;
   return (...args) => {
-    clearTimeout(timer)
-    timer = setTimeout(() => fn(...args), delay)
-  }
-}
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), delay);
+  };
+};
