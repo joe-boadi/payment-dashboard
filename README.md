@@ -11,7 +11,7 @@ vendor to view payments received from Customer.
 - Date range filter + search
 - Modal with full details (ModeOfPayments, invoices, Payee)
 - Fully responsive + accessible
-- CORS handled via Vite proxy
+- CORS handled via Netlify TOML
 
 ![A modal to view Payment details](public/assets/images/modal.png)
 
