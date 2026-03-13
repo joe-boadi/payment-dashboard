@@ -1,0 +1,17 @@
+.errorHeading {
+  color: rgb(232, 30, 30);
+}
+
+.errorTitle {
+  font-size: larger;
+  font-weight: 500;
+}
+
+.errorImageContainer {
+  min-width: 200px;
+  margin: auto;
+}
+
+.errorSubInfo {
+  color: gray;
+}

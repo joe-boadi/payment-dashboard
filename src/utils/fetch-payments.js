@@ -14,14 +14,16 @@ export const fetchPayments = async (startDate, endDate) => {
   const payments = await res.json();
 
   const paginationHeader = res.headers.get('x-pagination');
-  const pagination = paginationHeader ? JSON.parse(paginationHeader) : {
-    totalCount: payments.length,
-    totalPages: 1,
-    currentPage: 1,
-    pageSize: 500,
-  };
+  const pagination = paginationHeader
+    ? JSON.parse(paginationHeader)
+    : {
+        totalCount: payments.length,
+        totalPages: 1,
+        currentPage: 1,
+        pageSize: 500,
+      };
 
-  return { payments, pagination}
+  return { payments, pagination };
 };
 
 /**
@@ -30,10 +32,10 @@ export const fetchPayments = async (startDate, endDate) => {
  * @returns {Promise<Object>}
  */
 export const fetchPaymentDetail = async (paymentId) => {
-  const targetUrl = `${API_BASE}/Payments/${encodeURIComponent(paymentId)}`
-  const res = await fetch(targetUrl)
+  const targetUrl = `${API_BASE}/Payments/${encodeURIComponent(paymentId)}`;
+  const res = await fetch(targetUrl);
 
-  if (!res.ok) throw new Error(`Failed to fetch detail: ${res.status}`)
+  if (!res.ok) throw new Error(`Failed to fetch detail: ${res.status}`);
 
-  return res.json()
-}
+  return res.json();
+};

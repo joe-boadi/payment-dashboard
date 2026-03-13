@@ -1,0 +1,12 @@
+# Proxy all /sales-api calls to the real PSC API (fixes CORS)
+[[redirects]]
+  from = "/sales-api/*"
+  to = "https://spes.pscgh.com:442/sales-api/:splat"
+  status = 200
+  force = true
+
+# Required for React SPA routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
