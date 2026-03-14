@@ -8,12 +8,20 @@ vendor to view payments received from Customer.
 ## Features
 
 - Real-time table from an `API`
-- Date range filter + search
+- Date range filter + search + sorting
 - Modal with full details (ModeOfPayments, invoices, Payee)
+- Keyboard Navigation
 - Fully responsive + accessible
 - CORS handled via Netlify TOML
 
 ![A modal to view Payment details](public/assets/images/modal.png)
+
+---
+
+## Known Issues
+
+- Closing the modal with `ESC` key does not work
+- Closing the modal with `Enter` key causes a re-render of the modal view even though stopPropagation is initialized after keypress.
 
 ---
 
