@@ -9,6 +9,10 @@ table {
   border-collapse: collapse;
   background: white;
 }
+table button:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 4px;
+}
 
 th,
 td {
@@ -33,6 +37,10 @@ tr:hover {
   background: #f1f5f9;
 }
 
+tr:focus-within {
+  background-color: #f1f5f9;
+}
+
 .amount {
   font-weight: 600;
   color: var(--accent);
@@ -50,6 +58,11 @@ tr:hover {
   cursor: pointer;
   font-weight: 600;
   transition: 0.2s ease-in-out;
+}
+
+.viewBtn:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 4px;
 }
 
 .viewBtn:hover {

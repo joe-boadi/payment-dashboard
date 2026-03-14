@@ -33,6 +33,7 @@ export const PaymentTable = ({ payments, onView, sortConfig, onSort }) => {
               <td title="Payment Date">{formatDate(p.PaymentDate)}</td>
               <td>
                 <button
+                  type="button"
                   title="View Details"
                   className={styles.viewBtn}
                   onClick={() => onView(p.PaymentId)}

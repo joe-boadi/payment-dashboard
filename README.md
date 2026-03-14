@@ -8,12 +8,21 @@ vendor to view payments received from Customer.
 ## Features
 
 - Real-time table from an `API`
-- Date range filter + search
+- Date range filter + search + sorting
+- Sort in `ASC` or `DSC` using the table heads of displayed data
 - Modal with full details (ModeOfPayments, invoices, Payee)
+- Keyboard Navigation
 - Fully responsive + accessible
 - CORS handled via Netlify TOML
 
 ![A modal to view Payment details](public/assets/images/modal.png)
+
+---
+
+## Known Issues
+
+- Although it works, there is inconsistencies in the operation of the keydown event for `ESC` and `Enter` key; `REMARKS -> issue` resolved
+- API data fetch is determined by a strong internet connection otherwise you face fetch errors intermittently.
 
 ---
 
