@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
 import { formatCurrency, formatDate } from '../../utils/formatters';
 import { Loader } from '../loader/Loader';
@@ -9,15 +10,31 @@ import styles from './PaymentModal.module.css';
  * - Shows loader while fetching
  */
 export const PaymentModal = ({ payment, isOpen, loadingDetail, onClose }) => {
-  const handleKeyDown = (e) => {
-    if (e.key === 'ESC' || e.key === 'Escape' || e.key === 'esc') {
-      console.log('Escape');
-      onClose();
+  const dialogRef = useRef(null);
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ESC' || e.key === 'Escape' || e.key === 'esc') {
+        e.preventDefault();
+        onClose();
+      }
+      if (e.key === 'Enter') {
+        onClose();
+        e.stopPropagation();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleKeyDown);
+      // Ensure dialog receives focus
+      dialogRef.current?.focus();
     }
-    if (e.key === 'Enter') {
-      e.stopPropagation();
-    }
-  };
+
+    // Cleanup listener when dialog closes or component unmounts
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [onClose, isOpen]);
+
   if (!isOpen) return null;
 
   if (loadingDetail) {
@@ -140,10 +157,11 @@ export const PaymentModal = ({ payment, isOpen, loadingDetail, onClose }) => {
   return (
     <div className={styles.modalContainer}>
       <dialog
+        ref={dialogRef}
+        tabIndex={'-1'}
         open={isOpen}
         className={styles.modal}
         onClick={onClose}
-        onKeyDown={handleKeyDown}
         aria-modal="true"
         aria-labelledby="modalTitle"
       >
