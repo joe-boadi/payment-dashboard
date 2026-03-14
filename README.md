@@ -9,6 +9,7 @@ vendor to view payments received from Customer.
 
 - Real-time table from an `API`
 - Date range filter + search + sorting
+- Sort in `ASC` or `DSC` using the table heads of displayed data
 - Modal with full details (ModeOfPayments, invoices, Payee)
 - Keyboard Navigation
 - Fully responsive + accessible
@@ -20,8 +21,8 @@ vendor to view payments received from Customer.
 
 ## Known Issues
 
-- Closing the modal with `ESC` key does not work
-- Closing the modal with `Enter` key causes a re-render of the modal view even though stopPropagation is initialized after keypress.
+- Although it works, there is inconsistencies in the operation of the keydown event for `ESC` and `Enter` key; `REMARKS -> issue` resolved
+- API data fetch is determined by a strong internet connection otherwise you face fetch errors intermittently.
 
 ---
 
