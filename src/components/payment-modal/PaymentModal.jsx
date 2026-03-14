@@ -9,6 +9,15 @@ import styles from './PaymentModal.module.css';
  * - Shows loader while fetching
  */
 export const PaymentModal = ({ payment, isOpen, loadingDetail, onClose }) => {
+  const handleKeyDown = (e) => {
+    if (e.key === 'ESC' || e.key === 'Escape' || e.key === 'esc') {
+      console.log('Escape');
+      onClose();
+    }
+    if (e.key === 'Enter') {
+      e.stopPropagation();
+    }
+  };
   if (!isOpen) return null;
 
   if (loadingDetail) {
@@ -134,12 +143,17 @@ export const PaymentModal = ({ payment, isOpen, loadingDetail, onClose }) => {
         open={isOpen}
         className={styles.modal}
         onClick={onClose}
-        role="dialog"
+        onKeyDown={handleKeyDown}
         aria-modal="true"
         aria-labelledby="modalTitle"
       >
         <div className={styles.modalContent} onClick={(e) => e.stopPropagation()} role="document">
-          <button className={styles.closeBtn} onClick={onClose} aria-label="Close modal">
+          <button
+            className={styles.closeBtn}
+            onClick={onClose}
+            title="Close modal"
+            aria-label="Close modal"
+          >
             <X size={24} />
           </button>
 
