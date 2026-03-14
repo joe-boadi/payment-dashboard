@@ -174,7 +174,7 @@ export const PaymentModal = ({ payment, isOpen, loadingDetail, onClose }) => {
           >
             <X size={24} />
           </button>
-
+          <span className={styles.modalInfo}>Press ESC or Enter to Close *</span>
           {renderBody()}
         </div>
       </dialog>

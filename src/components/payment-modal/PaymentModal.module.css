@@ -10,6 +10,10 @@
   opacity: 100%;
   transition: opacity 0.3s ease;
 }
+.modalInfo {
+  color: var(--primary);
+  font-size: small;
+}
 .modal:focus {
   outline: none;
 }
